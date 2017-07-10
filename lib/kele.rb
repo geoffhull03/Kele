@@ -1,9 +1,11 @@
 require 'httparty'
 require 'json'
+require './lib/roadmap.rb'
 
 class Kele
   include HTTParty
-
+  include JSON
+  include Roadmap
 
   def initialize(email, password)
     @base_api_url = "https://www.bloc.io/api/v1"
@@ -27,13 +29,4 @@ class Kele
 
     @mentor_availability = JSON.parse(response.body)
   end
-
-  def get_roadmap(roadmap_id)
-    response = self.class.get(@base_api_url + "/roadmaps/#{roadmap_id}", headers: { "authorization" => @authorization_token })
-
-    puts "Cannot retrieve roadmap. Check your code, dummy" if response.code != 200
-
-    @roadmap_id = JSON.parse(response.body)
-  end
-
 end
