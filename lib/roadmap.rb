@@ -5,7 +5,7 @@ module Roadmap
 
     puts "Cannot retrieve roadmap. Check your code, dummy" if response.code != 200
 
-    @roadmap_id = JSON.parse(response.body)
+    @roadmap = JSON.parse(response.body)
   end
 
   def get_checkpoint(checkpoint_id)
