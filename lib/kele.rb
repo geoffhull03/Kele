@@ -4,6 +4,7 @@ require 'json'
 class Kele
   include HTTParty
 
+
   def initialize(email, password)
     @base_api_url = "https://www.bloc.io/api/v1"
     response = self.class.post(@base_api_url + '/sessions', body: { "email": email, "password": password })
@@ -17,7 +18,14 @@ class Kele
 
     puts "Email/password combination not found. Please try again." if response.code != 200
     @user_data = JSON.parse(response.body)
+  end
 
+  def get_mentor_availability(mentor_id)
+    response = self.class.get(@base_api_url + "/mentors/#{mentor_id}/student_availability", headers: { "authorization" => @authorization_token })
+
+    puts "Cannot retrieve mentor availability. Check your code, dummy" if response.code != 200
+
+    @mentor_availability = JSON.parse(response.body)
   end
 
 end
