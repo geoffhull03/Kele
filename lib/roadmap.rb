@@ -5,7 +5,7 @@ module Roadmap
 
     puts "Cannot retrieve roadmap. Check your code, dummy" if response.code != 200
 
-    @roadmap = JSON.parse(response.body)
+    @roadmap_id = JSON.parse(response.body)
   end
 
   def get_checkpoint(checkpoint_id)
@@ -15,4 +15,13 @@ module Roadmap
 
     @checkpoint_id = JSON.parse(response.body)
   end
+
+  def get_messages(page)
+    response = self.class.get(@base_api_url + "/message_threads", headers: { "authorization" => @authorization_token })
+
+    puts "Cannot retrieve message threads. Check your code, dummy" if response.code != 200
+
+    @message_thread = JSON.parse(response.body)
+  end
+
 end
