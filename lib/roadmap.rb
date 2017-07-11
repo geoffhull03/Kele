@@ -24,4 +24,10 @@ module Roadmap
     @message_thread = JSON.parse(response.body)
   end
 
+  def create_message(sender, recipient_id, subject, message)
+    response = self.class.post(@base_api_url + '/messages', body: {"sender": 'geoffhull03@gmail.com', "recipient_id": recipient_id, "subject": subject, "stripped-text": message}, headers: { "authorization" => @authorization_token})
+    
+    puts response.body
+  end
+
 end
