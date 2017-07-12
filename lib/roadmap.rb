@@ -25,9 +25,18 @@ module Roadmap
   end
 
   def create_message(sender, recipient_id, subject, message)
-    response = self.class.post(@base_api_url + '/messages', body: {"sender": 'geoffhull03@gmail.com', "recipient_id": recipient_id, "subject": subject, "stripped-text": message}, headers: { "authorization" => @authorization_token})
-    
+    response = self.class.post(@base_api_url + '/messages', body: {"sender": 'geoffhull03@gmail.com', "recipient_id": recipient_id, "subject": subject, "stripped-text": message}, headers: { "authorization" => @authorization_token })
+
     puts response.body
   end
 
+  def create_submission(checkpoint_id, enrollment_id, assignment_branch, assignment_commit_link, comment)
+    response = self.class.post(@base_api_url + '/checkpoint_submissions', body: {"checkpoint_id": checkpoint_id, "enrollment_id": enrollment_id, "assignment_branch": assignment_branch, "assignment_commit_link": assignment_commit_link, "comment": comment}, headers: { "authorization" => @authorization_token })
+
+    if response["status"] == "submitted"
+      puts "Submission has sucessfully sent"
+    else
+      puts "Submission failed to send"
+    end
+  end
 end
